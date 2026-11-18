@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMPLOYEE PRO - Absensi Karyawan</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h2>EMPLOYEE<span>PRO</span></h2>
+
+        <p class="menu-label">MENU UTAMA</p>
+
+        <button class="nav active" onclick="showPage('dashboard',this)">Dashboard</button>
+        <button class="nav" onclick="showPage('employees',this)">Data Karyawan</button>
+        <button class="nav" onclick="showPage('attendance',this)">Absensi</button>
+        <button class="nav" onclick="showPage('reports',this)">Laporan</button>
+
+        <p class="footer">Employee Management System</p>
+    </aside>
+
+    <main>
+        <header>
+            <div>
+                <h1 id="pageTitle">Dashboard</h1>
+                <p>Sistem Informasi Kehadiran Karyawan</p>
+            </div>
+            <span class="admin">ADMIN</span>
+        </header>
+
+        <section id="dashboard" class="page active-page">
+            <h2>Ringkasan Kehadiran</h2>
+
+            <div class="stats">
+                <div class="card">
+                    <p>Total Karyawan</p>
+                    <h2 id="totalEmployees">0</h2>
+                </div>
+                <div class="card">
+                    <p>Hadir Hari Ini</p>
+                    <h2 id="totalPresent">0</h2>
+                </div>
+                <div class="card">
+                    <p>Izin / Sakit</p>
+                    <h2 id="totalLeave">0</h2>
+                </div>
+                <div class="card">
+                    <p>Belum Hadir</p>
+                    <h2 id="totalAbsent">0</h2>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>Jam dan Tanggal</h3>
+                <h1 id="clock">00:00:00</h1>
+                <p id="todayDate"></p>
+            </div>
+        </section>
+
+        <section id="employees" class="page">
+            <div class="panel">
+                <h2>Tambah Karyawan</h2>
+
+                <form id="employeeForm">
+                    <input type="hidden" id="editId">
+
+                    <input id="empNumber" placeholder="ID Karyawan" required>
+                    <input id="empName" placeholder="Nama Lengkap" required>
+                    <input id="empPosition" placeholder="Jabatan" required>
+                    <input id="empDepartment" placeholder="Departemen" required>
+                    <input id="empPhone" placeholder="Nomor Telepon">
+
+                    <button class="primary" type="submit" id="saveEmployee">
+                        Simpan Karyawan
+                    </button>
+                </form>
+            </div>
+
+            <div class="panel">
+                <h2>Daftar Karyawan</h2>
+                <input id="employeeSearch" placeholder="Cari karyawan...">
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nama</th>
+                                <th>Jabatan</th>
+                                <th>Departemen</th>
+                                <th>Telepon</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="employeeTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="attendance" class="page">
+            <div class="panel">
+                <h2>Absensi Karyawan</h2>
+
+                <form id="attendanceForm">
+                    <label>Pilih Karyawan</label>
+                    <select id="attendanceEmployee" required>
+                        <option value="">Pilih Karyawan</option>
+                    </select>
+
+                    <label>Status Kehadiran</label>
+                    <select id="attendanceStatus">
+                        <option value="Hadir">Hadir</option>
+                        <option value="Izin">Izin</option>
+                        <option value="Sakit">Sakit</option>
+                        <option value="Alpa">Alpa</option>
+                    </select>
+
+                    <textarea id="attendanceNote" placeholder="Keterangan"></textarea>
+
+                    <button type="button" class="primary" onclick="checkIn()">Absen Masuk</button>
+                    <button type="button" class="success" onclick="checkOut()">Absen Pulang</button>
+                    <button type="submit" class="secondary">Simpan Status</button>
+                </form>
+            </div>
+
+            <div class="panel">
+                <h2>Riwayat Absensi</h2>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Masuk</th>
+                                <th>Pulang</th>
+                                <th>Status</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attendanceTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="reports" class="page">
+            <div class="panel">
+                <h2>Laporan Kehadiran</h2>
+                <input type="date" id="reportDate">
+                <button class="primary" onclick="renderReports()">Tampilkan</button>
+                <button class="success" onclick="exportCSV()">Export CSV</button>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Tanggal</th>
+                                <th>Masuk</th>
+                                <th>Pulang</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
